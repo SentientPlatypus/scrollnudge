@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experiment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <div class="top-bar">
+        <button id="refresh-button">Refresh</button>
+    </div>
+
+    <div class="content">
+        {% for item in data %}
+        <div class="request" data-position="{{ loop.index0 }}"
+             data-featureA="{{ item['x1'] }}"
+             data-featureB="{{ item['x2'] }}"
+             data-featureC="{{ item['x3'] }}"
+             data-featureD="{{ item['x4'] }}"
+             data-featureE="{{ item['x5'] }}"
+             data-featureF="{{ item['x6'] }}">
+            <p>Rectangle {{ loop.index0 + 1 }}</p>
+            <p>A: {{ item['x1'] }}, B: {{ item['x2'] }}, C: {{ item['x3'] }}, D: {{ item['x4'] }}, E: {{item['x5']}}, F:{{item['x6']}}</p>
+            <button class="select-button">Select</button>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="penalty-popup" class="penalty-popup">
+        <div class="penalty-message">
+            <h1>PENALTY</h1>
+            <p>Time remaining: <span id="countdown">60</span> seconds</p>
+        </div>
+    </div>
+    <script>
+        const userId = JSON.parse('{{ user_id | tojson }}');
+        const treatment = JSON.parse('{{ treatment | tojson }}');
+        const runNumber = JSON.parse('{{ run_number | tojson }}');
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+</body>
+</html>

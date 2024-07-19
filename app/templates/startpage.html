@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start Page</title>
+</head>
+<body>
+    <h1>Welcome to the Scroll Nudge Experiment</h1>
+    <p>In this experiment, you will be asked to find buyer requests with a value greater than a certain threshold.</p>
+    <p>You will play 20 rounds (+5 practice rounds). Each round consists of 100 requests.</p>
+    <p>If you find a request with a value greater than the threshold, click the "Select" button.</p>
+    <p>If you make a mistake, you will be penalized with a 1-minute screen freeze.</p>
+    <p>Click "Next" to begin the practice rounds.</p>
+    <form action="/experiment" method="post">
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" name="user_id" required><br><br>
+        <button type="submit">Start Experiment</button>
+    </form>
+</body>
+</html>
