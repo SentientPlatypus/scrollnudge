@@ -29,7 +29,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/scrollnudge">
-    <img src="images/logo.png" alt="Logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSidnq2Bod6Sa4WQw_ADzsBnsjvazPIs4bitA&s" alt="Logo">
   </a>
 
 <h3 align="center">Scroll Nudge Experiment</h3>
@@ -79,7 +79,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://sites.google.com/icsd.k12.ny.us/impact-combat-sports?usp=sharing)
+![alt text](image-1.png)
 
 Context: The paper aims to study how ranking quality affects seller behavior on a B2B platform. The platform arranges buyer requests sequentially on a seller’s log in page. When the seller logs in, they view requests sequentially starting from the top and click on a button called “contact buyer” if they want to transact with the buyer. The platform generates revenue from the number of times the seller clicks on the “contact buyer” button. The platform is making investments to improve ranking quality, i.e., it wants to show buyer requests that have the highest value to the seller at the top of the page.
 
@@ -201,8 +201,8 @@ Project Link: [https://github.com/scrollnudge](https://github.com/scrollnudge)
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Rakesh Allu]()
-* [Vishal Gaur]()
+* [Rakesh Allu](https://sites.google.com/view/rakeshallu/home)
+* [Vishal Gaur](https://business.cornell.edu/faculty-research/faculty/vg77/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
