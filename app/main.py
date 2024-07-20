@@ -84,6 +84,7 @@ def forbidden(e):
 def load_data(filename):
     path = 'app/presets/' + filename
     df = pd.read_csv(path)
+    df = df.round(2)
     return df.to_dict(orient='records')
 
 @app.route('/')

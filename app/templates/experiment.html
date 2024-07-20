@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Experiment</title>
+    <title>BRB Mart</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 <body>
     <div class="top-bar">
-        <button id="refresh-button">Refresh</button>
+        <h1>BRB Mart</h1>
+        <button id="refresh-button" class="circle-button">X</button>
     </div>
 
     <div class="content">
@@ -19,12 +20,13 @@
              data-featureD="{{ item['x4'] }}"
              data-featureE="{{ item['x5'] }}"
              data-featureF="{{ item['x6'] }}">
-            <p>Rectangle {{ loop.index0 + 1 }}</p>
-            <p>A: {{ item['x1'] }}, B: {{ item['x2'] }}, C: {{ item['x3'] }}, D: {{ item['x4'] }}, E: {{item['x5']}}, F:{{item['x6']}}</p>
+            <p><strong>Request {{ loop.index0 + 1 }}</strong></p>
+            <p>Feature values<br> A: {{ item['x1'] }}, B: {{ item['x2'] }}, C: {{ item['x3'] }}, D: {{ item['x4'] }}, E: {{item['x5']}}, F:{{item['x6']}}</p>
             <button class="select-button">Select</button>
         </div>
         {% endfor %}
     </div>
+
     <div id="penalty-popup" class="penalty-popup">
         <div class="penalty-message">
             <h1>PENALTY</h1>
@@ -37,6 +39,5 @@
         const runNumber = JSON.parse('{{ run_number | tojson }}');
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
-
 </body>
 </html>
