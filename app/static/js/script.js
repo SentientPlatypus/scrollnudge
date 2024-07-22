@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const featureF = parseFloat(request.dataset.featuref);
             const totalValue = featureA + featureB + featureC + featureD + featureE + featureF;
             console.log(featureA, featureB, featureC, featureD, featureE, featureF, "total val:", totalValue)
-            if (totalValue >= 50) {
+            if (totalValue >= 75) {
                 request.style.backgroundColor = 'green';
             } else {
                 request.style.backgroundColor = 'red';
