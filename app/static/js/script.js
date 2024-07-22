@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const requests = document.querySelectorAll('.request');
     const viewed = new Set();
     const selected = new Set();
+    const viewTimes = {}; // Object to store view times for each position
+    const startTime = performance.now(); // Record the start time
     const penaltyPopup = document.getElementById('penalty-popup');
     const countdownElement = document.getElementById('countdown');
 
@@ -9,7 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
         requests.forEach(request => {
             const rect = request.getBoundingClientRect();
             if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                viewed.add(request.dataset.position);
+                const position = request.dataset.position;
+                if (!viewed.has(position)) {
+                    viewed.add(position);
+                    const elapsedTime = (performance.now() - startTime) / 1000; // Time in seconds
+                    viewTimes[position] = elapsedTime;
+                    console.log(`Position ${position} viewed at ${elapsedTime.toFixed(2)} seconds`);
+                }
             }
         });
     });
@@ -24,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const featureE = parseFloat(request.dataset.featuree);
             const featureF = parseFloat(request.dataset.featuref);
             const totalValue = featureA + featureB + featureC + featureD + featureE + featureF;
-            console.log(featureA, featureB, featureC, featureD, featureE, featureF, "total val:", totalValue)
+
+            console.log(featureA, featureB, featureC, featureD, featureE, featureF, "total val:", totalValue);
+
             if (totalValue >= 75) {
                 request.style.backgroundColor = 'green';
             } else {
@@ -41,8 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Treatment:', treatment);
         console.log('Viewed:', Array.from(viewed));
         console.log('Selected:', Array.from(selected));
-        console.log('Run Numebr:', runNumber);
-        // Send the viewed and selected data to the server here if needed
+        console.log('View Times:', viewTimes);
+        console.log('Run Number:', runNumber);
+
+        // Send the viewed, selected, and view times data to the server here if needed
         fetch('/log_experiment_data', {
             method: 'POST',
             headers: {
@@ -53,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 treatment: treatment,
                 viewed: Array.from(viewed),
                 selected: Array.from(selected),
+                view_times: viewTimes,
                 run_number: runNumber
             })
         }).then(response => {

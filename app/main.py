@@ -122,13 +122,14 @@ def log_experiment_data():
     treatment = data['treatment']
     viewed = data['viewed']
     selected = data['selected']
+    view_times = data['view_times']
     runNumber = session.get('run_number')
 
     log_file = 'experiment_log.csv'
     file_exists = os.path.isfile(log_file)
 
     with open(log_file, 'a', newline='') as csvfile:
-        fieldnames = ['User ID', 'Treatment', 'Run Number', 'Position Number', 'Selected (Y/N)', 'Viewed (Y/N)']
+        fieldnames = ['User ID', 'Treatment', 'Run Number', 'Position Number', 'Selected (Y/N)', 'Viewed (Y/N)', 'View Time (s)']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         if not file_exists:
@@ -142,13 +143,16 @@ def log_experiment_data():
                 'Run Number': runNumber,
                 'Position Number': pos + 1,
                 'Selected (Y/N)': 1 if str(pos) in selected else 0,
-                'Viewed (Y/N)': 1 if str(pos) in viewed else 0
+                'Viewed (Y/N)': 1 if str(pos) in viewed else 0,
+                'View Time (s)': view_times.get(str(pos), None)
             })
+
     # Log this data, save it to a database, or process it as needed
     print(f'User ID: {user_id}')
     print(f'Treatment: {treatment}')
     print(f'Viewed: {viewed}')
     print(f'Selected: {selected}')
+    print(f'View Times: {view_times}')
     print(f'Run Number: {runNumber}')
 
     session['run_number'] = runNumber + 1  # Increment the run number
