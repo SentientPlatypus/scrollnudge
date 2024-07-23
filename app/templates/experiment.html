@@ -7,8 +7,12 @@
 </head>
 <body>
     <div class="top-bar">
+        <div class="session-info">
+            <p>Username: {{ user_id }}</p>
+            <p>Session Number: {{ run_number }}</p>
+        </div>
         <h1>BRB Mart</h1>
-        <button id="refresh-button" class="circle-button">X</button>
+        <button id="refresh-button" class="refresh-button">Start New Session</button>
     </div>
 
     <div class="content">
@@ -21,8 +25,13 @@
              data-featureE="{{ item['x5'] }}"
              data-featureF="{{ item['x6'] }}">
             <p><strong>Request {{ loop.index0 + 1 }}</strong></p>
-            <p>Feature values<br> A: {{ item['x1'] }}, B: {{ item['x2'] }}, C: {{ item['x3'] }}, D: {{ item['x4'] }}, E: {{item['x5']}}, F:{{item['x6']}}</p>
-            <button class="select-button">Select</button>
+            <p>A: <strong>{{ item['x1'] }}</strong></p>
+            <p>B: <strong>{{ item['x2'] }}</strong></p>
+            <p>C: <strong>{{ item['x3'] }}</strong></p>
+            <p>D: <strong>{{ item['x4'] }}</strong></p>
+            <p>E: <strong>{{ item['x5'] }}</strong></p>
+            <p>F: <strong>{{ item['x6'] }}</strong></p>
+            <button class="select-button">Contact Buyer</button>
         </div>
         {% endfor %}
     </div>

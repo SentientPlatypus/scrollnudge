@@ -36,15 +36,20 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(featureA, featureB, featureC, featureD, featureE, featureF, "total val:", totalValue);
 
             if (totalValue >= 75) {
-                request.style.backgroundColor = 'green';
+                button.style.backgroundColor = '#6eb43f'; // Green color
             } else {
-                request.style.backgroundColor = 'red';
+                button.style.backgroundColor = '#ef4035'; // Red color
                 showPenaltyPopup();
             }
 
             selected.add(request.dataset.position);
+            button.disabled = true;
+            button.classList.add('selected');
         });
     });
+
+    window.scrollBy(0, 1);
+    window.scrollBy(0, -1);
 
     document.getElementById('refresh-button').addEventListener('click', () => {
         console.log('User ID:', userId);

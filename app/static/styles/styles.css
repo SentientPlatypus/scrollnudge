@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff;
+    background-color: #f7f7f7;
     color: #000;
 }
 
@@ -8,48 +8,74 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #ffffff;
-    border: #000 2px solid;
+    background-color: #B31B1B; /* Updated color for top bar */
+    border-bottom: 2px solid #222222;
     text-align: center;
     z-index: 1000;
+    padding: 10px 0;
+    color: white; /* Changed text color to white */
 }
 
-.circle-button {
+.session-info {
     position: absolute;
-    right: 5vw;
-    top: 1.5vh;
-    background-color: #12e919;
-    color: #fff;
-    border: 0px solid #000;
-    border-radius: 50%;
-    width: 40px;
+    left: 10px;
+    top: 10px;
+    text-align: left;
+}
+
+.refresh-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #222222;
+    background-color: #f7f7f7;
+    border: 2px #222222;
+    border-radius: 5%;
+    width: 150px;
     height: 40px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 40px;
 }
 
 .content {
-    margin-top: 90px; /* Adjusted to accommodate the thicker top bar */
+    margin-top: 90px;
     overflow-y: scroll;
     height: 85vh;
     padding: 10px;
+    background-color: #faeffb;
 }
 
 .request {
-    border: 2px solid #000;
     padding: 10px;
     margin: 10px 0;
     position: relative;
+    border-radius: 8px; /* Rounded corners */
+    background-color: #FFFFFF; /* Background color for requests */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow for requests */
+}
+
+.request p {
+    margin: 5px 0; /* Reduced margin for paragraphs */
 }
 
 .select-button {
     position: absolute;
     right: 10px;
-    top: 10px;
-    background: none;
+    bottom: 10px; /* Positioning at the bottom right */
+    background: #006699; /* Green color for button */
+    color: #fff;
     border: none;
-    font-size: 20px;
+    font-size: 16px;
+    padding: 10px 15px;
     cursor: pointer;
+    border-radius: 4px; /* Rounded corners for button */
+}
+
+.select-button.selected {
+    background: #6c757d; /* Gray color when selected */
+    cursor: not-allowed;
 }
 
 .penalty-popup {
@@ -68,7 +94,7 @@ body {
 }
 
 .penalty-message {
-    background-color: red;
+    background-color: B31B1B;
     padding: 20px;
     border-radius: 10px;
 }
