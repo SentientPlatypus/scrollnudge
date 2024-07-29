@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const requests = document.querySelectorAll('.request');
     const viewed = new Set();
     const selected = new Set();
-    const viewTimes = {}; // Object to store view times for each position
+    const viewTimes = {}; // Object to store view and selection times for each position
     const startTime = performance.now(); // Record the start time
     const penaltyPopup = document.getElementById('penalty-popup');
     const countdownElement = document.getElementById('countdown');
@@ -15,7 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!viewed.has(position)) {
                     viewed.add(position);
                     const elapsedTime = (performance.now() - startTime) / 1000; // Time in seconds
-                    viewTimes[position] = elapsedTime;
+                    if (!viewTimes[position]) {
+                        viewTimes[position] = {};
+                    }
+                    viewTimes[position].viewedAt = elapsedTime;
                     console.log(`Position ${position} viewed at ${elapsedTime.toFixed(2)} seconds`);
                 }
             }
@@ -35,16 +38,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(featureA, featureB, featureC, featureD, featureE, featureF, "total val:", totalValue);
 
-            if (totalValue >= 75) {
-                button.style.backgroundColor = '#a0998c'; // Green color
-            } else {
-                button.style.backgroundColor = '#a0998c'; // Red color
-                showPenaltyPopup();
-            }
+            const position = request.dataset.position;
+            selected.add(position);
 
-            selected.add(request.dataset.position);
+            if (!viewTimes[position]) {
+                viewTimes[position] = {};
+            }
+            const selectionTime = (performance.now() - startTime) / 1000; // Time in seconds
+            viewTimes[position].selectedAt = selectionTime;
+            viewTimes[position].correct = totalValue >= 75; // Log if the selection is correct
+            console.log(`Position ${position} selected at ${selectionTime.toFixed(2)} seconds`);
+
             button.disabled = true;
             button.classList.add('selected');
+
+            if (totalValue >= 75) {
+                button.style.backgroundColor = '#a0998c'; // Correct
+            } else {
+                button.style.backgroundColor = '#a0998c'; // Show penalty if incorrect
+                showPenaltyPopup();
+            }
         });
     });
 
@@ -53,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('refresh-button').addEventListener('click', () => {
         console.log('User ID:', userId);
-        console.log('IP:', ip)
+        console.log('IP:', ip);
         console.log('Treatment:', treatment);
         console.log('Viewed:', Array.from(viewed));
         console.log('Selected:', Array.from(selected));
@@ -68,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({
                 user_id: userId,
-                ip:ip,
+                ip: ip,
                 treatment: treatment,
                 viewed: Array.from(viewed),
                 selected: Array.from(selected),

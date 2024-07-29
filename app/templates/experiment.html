@@ -24,13 +24,19 @@
              data-featureD="{{ item['x4'] }}"
              data-featureE="{{ item['x5'] }}"
              data-featureF="{{ item['x6'] }}">
-            <p><strong>Request {{ loop.index0 + 1 }}</strong></p>
-            <p>Product Match: <strong>{{ item['x1'] }}</strong></p>
-            <p>Location Match: <strong>{{ item['x2'] }}</strong></p>
-            <p>Order Quantity: <strong>{{ item['x3'] }}</strong></p>
-            <p>Buyer Reliability: <strong>{{ item['x4'] }}</strong></p>
-            <p>Repeat Business Potential: <strong>{{ item['x5'] }}</strong></p>
-            <p>Relevance to Other Buyer's Products: <strong>{{ item['x6'] }}</strong></p>
+            <p class="request-title"><strong>Request {{ loop.index0 + 1 }}</strong></p>
+            <div class="request-columns">
+                <div class="column">
+                    <p>Product Match: <strong>{{ item['x1'] }}</strong></p>
+                    <p>Location Match: <strong>{{ item['x2'] }}</strong></p>
+                    <p>Order Quantity: <strong>{{ item['x3'] }}</strong></p>
+                </div>
+                <div class="column">
+                    <p>Buyer Reliability: <strong>{{ item['x4'] }}</strong></p>
+                    <p>Repeat Business Potential: <strong>{{ item['x5'] }}</strong></p>
+                    <p>Relevance to Other Buyer's Products: <strong>{{ item['x6'] }}</strong></p>
+                </div>
+            </div>
             <button class="select-button">I Am Interested in the Buyer</button>
         </div>
         {% endfor %}
@@ -39,7 +45,7 @@
     <div id="penalty-popup" class="penalty-popup">
         <div class="penalty-message">
             <h1>PENALTY</h1>
-            <p>Time remaining: <span id="countdown">60</span> seconds</p>
+            <p>Time remaining: <span id="countdown">10</span> seconds</p>
         </div>
     </div>
     <script>

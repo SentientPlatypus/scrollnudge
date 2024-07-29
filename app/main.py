@@ -8,6 +8,7 @@ import pandas as pd
 
 server = gunicorn.SERVER
 
+CHECKING_IP = False
 RUNS = 3
 LENGTH = 500
 TREATMENT_MAP = {
@@ -97,7 +98,9 @@ def experiment():
     session['user_id'] = user_id
     session['ip'] = request.environ['REMOTE_ADDR']
     experiment_log = pd.read_csv('experiment_log.csv')
-    if user_ip in experiment_log['ip'].values:
+    print(experiment_log)
+
+    if CHECKING_IP and request.environ['REMOTE_ADDR'] in experiment_log['ip'].values:
         return render_template('done.html')
 
     session['run_numbers'] = list(range(1, 3))
@@ -125,7 +128,7 @@ def run_experiment():
 @app.route('/log_experiment_data', methods=['POST'])
 def log_experiment_data():
     data = request.json
-    user_id = data['user_id']     
+    user_id = data['user_id']
     ip = data['ip']
     treatment = data['treatment']
     viewed = data['viewed']
@@ -137,7 +140,7 @@ def log_experiment_data():
     file_exists = os.path.isfile(log_file)
 
     with open(log_file, 'a', newline='') as csvfile:
-        fieldnames = ['User ID', 'Treatment', 'Run Number', 'Position Number', 'Selected (Y/N)', 'Viewed (Y/N)', 'View Time (s)']
+        fieldnames = ['User ID', 'IP', 'Treatment', 'Run Number', 'Position Number', 'Selected (Y/N)', 'Viewed (Y/N)', 'View Time (s)', 'Selection Time (s)', 'Correct (Y/N)']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         if not file_exists:
@@ -145,20 +148,23 @@ def log_experiment_data():
 
         max_position = max(max(int(pos) for pos in viewed), max(int(pos) for pos in selected))
         for pos in range(max_position + 1):
+            position_str = str(pos)
             writer.writerow({
                 'User ID': user_id,
-                'IP' : ip,
+                'IP': ip,
                 'Treatment': treatment,
                 'Run Number': runNumber,
                 'Position Number': pos + 1,
-                'Selected (Y/N)': 1 if str(pos) in selected else 0,
-                'Viewed (Y/N)': 1 if str(pos) in viewed else 0,
-                'View Time (s)': view_times.get(str(pos), None)
+                'Selected (Y/N)': 1 if position_str in selected else 0,
+                'Viewed (Y/N)': 1 if position_str in viewed else 0,
+                'View Time (s)': view_times[position_str].get('viewedAt') if position_str in view_times else None,
+                'Selection Time (s)': view_times[position_str].get('selectedAt') if position_str in view_times else None,
+                'Correct (Y/N)': 1 if view_times.get(position_str, {}).get('correct') else 0
             })
 
     # Log this data, save it to a database, or process it as needed
     print(f'User ID: {user_id}')
-    print(f'IP: ', ip)
+    print(f'IP: {ip}')
     print(f'Treatment: {treatment}')
     print(f'Viewed: {viewed}')
     print(f'Selected: {selected}')
@@ -171,7 +177,27 @@ def log_experiment_data():
 
 @app.route('/end')
 def end_page():
-    return render_template('endpage.html', message="You're done!")
+    # Read the CSV file
+    log = pd.read_csv('experiment_log.csv')
+    
+    # Get the current session's UserID and IP
+    user_id = session.get('user_id')
+    ip = session.get('ip')
+    
+    # Filter the log for rows that match the current session's UserID and IP
+    matching_rows = log[(log['UserID'] == user_id) & (log['ip'] == ip)]
+    
+    # Count the total number of correct selections
+    total_correct = matching_rows['correct'].sum()
+    
+    return render_template('endpage.html', message="You're done!", total_correct=total_correct)
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     def run():
