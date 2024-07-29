@@ -96,6 +96,9 @@ def experiment():
     user_id = request.form['user_id']
     session['user_id'] = user_id
     session['ip'] = request.environ['REMOTE_ADDR']
+    experiment_log = pd.read_csv('experiment_log.csv')
+    if user_ip in experiment_log['ip'].values:
+        return render_template('done.html')
 
     session['run_numbers'] = list(range(1, 3))
     return redirect(url_for('run_experiment'))
