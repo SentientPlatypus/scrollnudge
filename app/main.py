@@ -11,36 +11,36 @@ server = gunicorn.SERVER
 RUNS = 3
 LENGTH = 500
 TREATMENT_MAP = {
-    1: 'random_nudge',
-    2: 'random_no_nudge',
-    3: 'partial_nudge',
-    4: 'partial_no_nudgeg',
-    5: 'perfect_nudge',
-    6: 'perfect_no_nudge',
-    7: 'random_nudge',
-    8: 'random_no_nudge',
-    9: 'partial_nudge',
-    10: 'partial_no_nudgeg',
-    11: 'perfect_nudge',
-    12: 'perfect_no_nudge',
-    13: 'random_nudge',
-    14: 'random_no_nudge',
-    15: 'partial_nudge',
-    16: 'partial_no_nudgeg',
-    17: 'perfect_nudge',
-    18: 'perfect_no_nudge',
-    19: 'random_nudge',
-    20: 'random_no_nudge',
-    21: 'partial_nudge',
-    22: 'partial_no_nudgeg',
-    23: 'perfect_nudge',
-    24: 'perfect_no_nudge',
-    25: 'random_nudge',
-    26: 'random_no_nudge',
-    27: 'partial_nudge',
-    28: 'partial_no_nudgeg',
-    29: 'perfect_nudge',
-    30: 'perfect_no_nudge',
+    1: 'random',
+    2: 'random',
+    3: 'partial',
+    4: 'partial',
+    5: 'perfect',
+    6: 'perfect',
+    7: 'random',
+    8: 'random',
+    9: 'partial',
+    10: 'partial',
+    11: 'perfect',
+    12: 'perfect',
+    13: 'random',
+    14: 'random',
+    15: 'partial',
+    16: 'partial',
+    17: 'perfect',
+    18: 'perfect',
+    19: 'random',
+    20: 'random',
+    21: 'partial',
+    22: 'partial',
+    23: 'perfect',
+    24: 'perfect',
+    25: 'random',
+    26: 'random',
+    27: 'partial',
+    28: 'partial',
+    29: 'perfect',
+    30: 'perfect',
 }
 
 def createApp():
@@ -95,13 +95,17 @@ def start_page():
 def experiment():
     user_id = request.form['user_id']
     session['user_id'] = user_id
+    session['ip'] = request.environ['REMOTE_ADDR']
 
     session['run_numbers'] = list(range(1, 3))
     return redirect(url_for('run_experiment'))
 
 @app.route('/run_experiment')
 def run_experiment():
+
     user_id = session.get('user_id')
+    ip = session.get('ip')
+    print(session)
 
     if not session['run_numbers']:
         return redirect(url_for('end_page'))
@@ -113,12 +117,13 @@ def run_experiment():
     run_number = session.get('run_number', 1)
 
     data = load_data(str(run_number) + ".csv")
-    return render_template('experiment.html', user_id=user_id, treatment=treatment, data=data, run_number = run_number)
+    return render_template('experiment.html', user_id=user_id, ip= ip, treatment=treatment, data=data, run_number = run_number)
 
 @app.route('/log_experiment_data', methods=['POST'])
 def log_experiment_data():
     data = request.json
-    user_id = data['user_id']
+    user_id = data['user_id']     
+    ip = data['ip']
     treatment = data['treatment']
     viewed = data['viewed']
     selected = data['selected']
@@ -139,6 +144,7 @@ def log_experiment_data():
         for pos in range(max_position + 1):
             writer.writerow({
                 'User ID': user_id,
+                'IP' : ip,
                 'Treatment': treatment,
                 'Run Number': runNumber,
                 'Position Number': pos + 1,
@@ -149,6 +155,7 @@ def log_experiment_data():
 
     # Log this data, save it to a database, or process it as needed
     print(f'User ID: {user_id}')
+    print(f'IP: ', ip)
     print(f'Treatment: {treatment}')
     print(f'Viewed: {viewed}')
     print(f'Selected: {selected}')

@@ -54,10 +54,13 @@ body {
     border-radius: 8px; /* Rounded corners */
     background-color: #FFFFFF; /* Background color for requests */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow for requests */
+    height: 25vh;
 }
 
 .request p {
     margin: 5px 0; /* Reduced margin for paragraphs */
+    font-size: 20px;
+    line-height: 30px;
 }
 
 .select-button {
@@ -71,6 +74,8 @@ body {
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 4px; /* Rounded corners for button */
+    height: 7vh;
+    width: 20vw;
 }
 
 .select-button.selected {

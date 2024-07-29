@@ -36,9 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(featureA, featureB, featureC, featureD, featureE, featureF, "total val:", totalValue);
 
             if (totalValue >= 75) {
-                button.style.backgroundColor = '#6eb43f'; // Green color
+                button.style.backgroundColor = '#a0998c'; // Green color
             } else {
-                button.style.backgroundColor = '#ef4035'; // Red color
+                button.style.backgroundColor = '#a0998c'; // Red color
                 showPenaltyPopup();
             }
 
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('refresh-button').addEventListener('click', () => {
         console.log('User ID:', userId);
+        console.log('IP:', ip)
         console.log('Treatment:', treatment);
         console.log('Viewed:', Array.from(viewed));
         console.log('Selected:', Array.from(selected));
@@ -67,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({
                 user_id: userId,
+                ip:ip,
                 treatment: treatment,
                 viewed: Array.from(viewed),
                 selected: Array.from(selected),

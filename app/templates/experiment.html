@@ -25,13 +25,13 @@
              data-featureE="{{ item['x5'] }}"
              data-featureF="{{ item['x6'] }}">
             <p><strong>Request {{ loop.index0 + 1 }}</strong></p>
-            <p>A: <strong>{{ item['x1'] }}</strong></p>
-            <p>B: <strong>{{ item['x2'] }}</strong></p>
-            <p>C: <strong>{{ item['x3'] }}</strong></p>
-            <p>D: <strong>{{ item['x4'] }}</strong></p>
-            <p>E: <strong>{{ item['x5'] }}</strong></p>
-            <p>F: <strong>{{ item['x6'] }}</strong></p>
-            <button class="select-button">Contact Buyer</button>
+            <p>Product Match: <strong>{{ item['x1'] }}</strong></p>
+            <p>Location Match: <strong>{{ item['x2'] }}</strong></p>
+            <p>Order Quantity: <strong>{{ item['x3'] }}</strong></p>
+            <p>Buyer Reliability: <strong>{{ item['x4'] }}</strong></p>
+            <p>Repeat Business Potential: <strong>{{ item['x5'] }}</strong></p>
+            <p>Relevance to Other Buyer's Products: <strong>{{ item['x6'] }}</strong></p>
+            <button class="select-button">I Am Interested in the Buyer</button>
         </div>
         {% endfor %}
     </div>
@@ -44,6 +44,7 @@
     </div>
     <script>
         const userId = JSON.parse('{{ user_id | tojson }}');
+        const ip = JSON.parse('{{ip | tojson}}');
         const treatment = JSON.parse('{{ treatment | tojson }}');
         const runNumber = JSON.parse('{{ run_number | tojson }}');
     </script>
