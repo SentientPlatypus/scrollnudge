@@ -1,4 +1,4 @@
-UserID,ip,treatment,session,position,selected,viewed,timeviewed,timeselected,correct,
+UserID,ip,treatment,runNumber,position,selected,viewed,timeviewed,timeselected,correct,
 
 genew,127.0.0.1,random,2,1,0,1,0.8585,,0
 genew,127.0.0.1,random,2,2,1,1,0.8589000000001397,1.8649000000001397,1
