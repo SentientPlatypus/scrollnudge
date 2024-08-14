@@ -3,17 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Start Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .note {
+            font-style: italic;
+            color: #555;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #000;
+        }
+
+        img {
+            width: 50vw;
+            height: 40vh;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to the Scroll Nudge Experiment</h1>
-    <p>In this experiment, you will be asked to find buyer requests with a value greater than a certain threshold.</p>
-    <p>You will play 20 rounds (+5 practice rounds). Each round consists of 100 requests.</p>
-    <p>If you find a request with a value greater than the threshold, click the "Select" button.</p>
-    <p>If you make a mistake, you will be penalized with a 1-minute screen freeze.</p>
-    <p>Click "Next" to begin the practice rounds.</p>
-    <form action="/experiment" method="post">
+    <p>Thank you for choosing to participate in the experiment. Below are the details of what to expect from it.</p>
+
+    <p>This experiment requires you to don the role of an owner of a small manufacturing company who wants
+    to find potential buyers on an online business-to-business platform called <span class="highlight">“B2BMart”</span>. The platform
+    arranges buyer requests one after the other on your login page as shown below. A buyer request is an
+    instance of a buyer sharing their procurement needs with B2BMart, which it displays to you. If you think
+    that the buyer request is relevant to your business, you may click on the <span class="highlight">“I am Interested in the Buyer”</span>
+    button on the screen to express your interest in engaging with the buyer.</p>
+
+    <p>On your screen, you will find the relevance of each buyer request to your business scored on six
+    dimensions – (i) product relevance, (ii) location relevance, (iii) order quantity, (iv) buyer reliability, (v)
+    potential for future business, and (vi) other products from the buyer. If the total score from all six
+    dimensions exceeds 72, the request is fit for your business, and you may click the <span class="highlight">“I am Interested in the Buyer”</span>
+    button.</p>
+
+    <p>You are asked to play 9 rounds. In each round, your goal is to find buyer requests that are relevant to
+    your business, i.e., find requests where the total score exceeds 72. In order to help you find the requests
+    quickly, the platform attempts to rank requests in descending order of value but may not always
+    succeed in ranking the requests accurately. At any point in the round, you may choose to end the
+    current round and start a new round by clicking the <span class="highlight">“Start New Session”</span> button at the top of the page.</p>
+
+    <p class="note">Clicking this button would display a new list of buyer requests. However, we recommend you to view at
+    least the top 30 buyer requests in each round before clicking the Start New Session button.</p>
+
+    <p>You will be provided a fixed compensation of $2 to participate and a variable compensation of $0.2 for
+    every relevant buyer request you find at the end of all 9 rounds. If you click on the select button when
+    the total value is less than 72, there will be a screen freeze for 10 seconds.</p>
+
+    <p>On the next page, you will see three multiple choice questions to recap the experiment and your task.
+    Please answer all of them accurately to participate.</p>
+        <img src="{{ url_for('static', filename='images/page.png') }}">
+    <form action="/assessment" method="post">
         <label for="user_id">Prolific ID:</label>
         <input type="text" id="user_id" name="user_id" required><br><br>
+
+        <label for="email_id">Email Address</label>
+        <input type="text" id="email_id" name="email_id" required><br><br>
         <button type="submit">Start Experiment</button>
     </form>
 </body>

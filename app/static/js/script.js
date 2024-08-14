@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({
                 user_id: userId,
+                email_id: emailId,
                 ip: ip,
                 treatment: treatment,
                 viewed: Array.from(viewed),

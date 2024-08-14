@@ -8,7 +8,7 @@
 <body>
     <div class="top-bar">
         <div class="session-info">
-            <p>Username: {{ user_id }}</p>
+            <p>Prolific ID: {{ user_id }}</p>
             <p>Session Number: {{ run_number }}</p>
         </div>
         <h1>BRB Mart</h1>
@@ -50,9 +50,11 @@
     </div>
     <script>
         const userId = JSON.parse('{{ user_id | tojson }}');
+        const emailId = JSON.parse('{{ email_id | tojson }}')
         const ip = JSON.parse('{{ip | tojson}}');
         const treatment = JSON.parse('{{ treatment | tojson }}');
         const runNumber = JSON.parse('{{ run_number | tojson }}');
+
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </body>

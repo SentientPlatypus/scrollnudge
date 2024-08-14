@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .question span {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .note {
+            font-style: italic;
+            color: #555;
+        }
+        .submit-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recap</h1>
+    
+    <form action="/submit-assessment" method="POST">
+        <div class="question">
+            <span>1. What is the total score beyond which you would consider a buyer request relevant for your business?</span>
+            <div class="options">
+                <label><input type="radio" name="q1" value="70"> a. 70</label>
+                <label><input type="radio" name="q1" value="72"> b. 72</label>
+                <label><input type="radio" name="q1" value="75"> c. 75</label>
+                <label><input type="radio" name="q1" value="79"> d. 79</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <span>2. Is the platform trying to rank buyer requests to help you find the relevant ones?</span>
+            <div class="options">
+                <label><input type="radio" name="q2" value="yes"> a. Yes</label>
+                <label><input type="radio" name="q2" value="no"> b. No</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <span>3. How does the platform attempt to rank?</span>
+            <div class="options">
+                <label><input type="radio" name="q3" value="ascending"> a. Ascending order of total score</label>
+                <label><input type="radio" name="q3" value="descending"> b. Descending order of total score</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <span>4. What is the recommended number of requests to view? <span class="note">(Note: Include this only on the link for scroll nudges)</span></span>
+            <div class="options">
+                <label><input type="radio" name="q4" value="20"> a. 20</label>
+                <label><input type="radio" name="q4" value="30"> b. 30</label>
+                <label><input type="radio" name="q4" value="40"> c. 40</label>
+            </div>
+        </div>
+        
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+</body>
+</html>

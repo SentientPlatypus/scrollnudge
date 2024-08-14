@@ -5,6 +5,7 @@ import gunicorn
 import os
 import random
 import pandas as pd
+import datetime
 
 server = gunicorn.SERVER
 
@@ -14,35 +15,20 @@ LENGTH = 500
 TREATMENT_MAP = {
     1: 'random',
     2: 'random',
-    3: 'partial',
-    4: 'partial',
+    3: 'random',
+    4: 'perfect',
     5: 'perfect',
     6: 'perfect',
-    7: 'random',
-    8: 'random',
+    7: 'partial',
+    8: 'partial',
     9: 'partial',
-    10: 'partial',
-    11: 'perfect',
-    12: 'perfect',
-    13: 'random',
-    14: 'random',
-    15: 'partial',
-    16: 'partial',
-    17: 'perfect',
-    18: 'perfect',
-    19: 'random',
-    20: 'random',
-    21: 'partial',
-    22: 'partial',
-    23: 'perfect',
-    24: 'perfect',
-    25: 'random',
-    26: 'random',
-    27: 'partial',
-    28: 'partial',
-    29: 'perfect',
-    30: 'perfect',
 }
+
+
+def calculateReward(ncorrect:int):
+    """Calculates the amount of money we give them for the number of correct selection"""
+    return 2 + .2 * ncorrect if ncorrect > 0 else 0
+
 
 def createApp():
     app = Flask(
@@ -92,24 +78,41 @@ def load_data(filename):
 def start_page():
     return render_template('startpage.html')
 
-@app.route('/experiment', methods=['POST'])
-def experiment():
+@app.route('/assessment', methods=['POST'])
+def assessment():
     user_id = request.form['user_id']
     session['user_id'] = user_id
+
+    email_id = request.form['email_id']
+    session['email_id'] = email_id
+
     session['ip'] = request.environ['REMOTE_ADDR']
+    session['run_numbers'] = list(range(1, 10))
     experiment_log = pd.read_csv('experiment_log.csv')
     print(experiment_log)
 
     if CHECKING_IP and request.environ['REMOTE_ADDR'] in experiment_log['ip'].values:
         return render_template('done.html')
+    
+    return render_template('assessment.html')
 
-    session['run_numbers'] = list(range(1, 3))
-    return redirect(url_for('run_experiment'))
+@app.route('/submit-assessment', methods=['POST'])
+def submitAssessment():
+    q1 = request.form.get('q1')
+    q2 = request.form.get('q2')
+    q3 = request.form.get('q3')
+    q4 = request.form.get('q4')
+
+    if q1 == "75" and q2 == "yes" and q3 == "descending" and q4 == "30":
+        print("assessment passed. redirecting to experiment")
+        return redirect(url_for('run_experiment'))
+    return render_template('failed.html')
 
 @app.route('/run_experiment')
 def run_experiment():
 
     user_id = session.get('user_id')
+    email_id = session.get('email_id')
     ip = session.get('ip')
     print(session)
 
@@ -123,24 +126,25 @@ def run_experiment():
     run_number = session.get('run_number', 1)
 
     data = load_data(str(run_number) + ".csv")
-    return render_template('experiment.html', user_id=user_id, ip= ip, treatment=treatment, data=data, run_number = run_number)
+    return render_template('experiment.html', user_id=user_id, email_id = email_id, ip= ip, treatment=treatment, data=data, run_number = run_number)
 
 @app.route('/log_experiment_data', methods=['POST'])
 def log_experiment_data():
     data = request.json
     user_id = data['user_id']
+    email_id = data['email_id']
     ip = data['ip']
     treatment = data['treatment']
     viewed = data['viewed']
     selected = data['selected']
     view_times = data['view_times']
-    runNumber = session.get('run_number')
+    runNumber = session.get('run_number') 
 
     log_file = 'experiment_log.csv'
     file_exists = os.path.isfile(log_file)
 
     with open(log_file, 'a', newline='') as csvfile:
-        fieldnames = ['User ID', 'IP', 'Treatment', 'Run Number', 'Position Number', 'Selected (Y/N)', 'Viewed (Y/N)', 'View Time (s)', 'Selection Time (s)', 'Correct (Y/N)']
+        fieldnames = ['User ID', 'Email ID', 'IP', 'Treatment', 'Run Number', 'Position Number', 'Selected (Y/N)', 'Viewed (Y/N)', 'View Time (s)', 'Selection Time (s)', 'Correct (Y/N)']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         if not file_exists:
@@ -151,6 +155,7 @@ def log_experiment_data():
             position_str = str(pos)
             writer.writerow({
                 'User ID': user_id,
+                'Email ID': email_id,
                 'IP': ip,
                 'Treatment': treatment,
                 'Run Number': runNumber,
@@ -189,8 +194,19 @@ def end_page():
     
     # Count the total number of correct selections
     total_correct = matching_rows['correct'].sum()
+    total_payout = calculateReward(total_correct)
+
+    with open('payout.csv', 'a', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=['prolificID','email','datecompleted','payout'])
+        writer.writerow({
+            'prolificID': user_id,
+            'email': session.get('email_id'),
+            'datecompleted': datetime.date.today().strftime('%Y-%m-%d'),
+            'payout': total_payout
+        })
+
     
-    return render_template('endpage.html', message="You're done!", total_correct=total_correct)
+    return render_template('endpage.html', message="You're done!", total_correct=total_correct, total_payout=total_payout)
 
 
 

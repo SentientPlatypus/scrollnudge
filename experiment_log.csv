@@ -1,4 +1,4 @@
-UserID,ip,treatment,runNumber,position,selected,viewed,timeviewed,timeselected,correct,
+UserID,Email_id,ip,treatment,runNumber,position,selected,viewed,timeviewed,timeselected,correct,
 
 genew,127.0.0.1,random,2,1,0,1,0.8585,,0
 genew,127.0.0.1,random,2,2,1,1,0.8589000000001397,1.8649000000001397,1
@@ -9,3 +9,8 @@ genew,127.0.0.1,random,1,1,1,1,0.5974000000001397,1.7699000000001397,0
 genew,127.0.0.1,random,1,2,0,1,0.5976000000000932,,0
 genew,127.0.0.1,random,1,3,0,1,0.5976000000000932,,0
 genew,127.0.0.1,random,1,4,0,1,13.721600000000093,,0
+adsasd,asdasd,127.0.0.1,partial,9,1,0,1,6.8215,,0
+adsasd,asdasd,127.0.0.1,partial,9,2,1,1,6.8216000000014905,7.418400000002235,0
+adsasd,asdasd,127.0.0.1,partial,9,3,0,1,6.821700000002981,,0
+adsasd,asdasd,127.0.0.1,partial,9,4,0,1,59.62610000000149,,0
+adsasd,asdasd,127.0.0.1,partial,9,5,0,1,59.81360000000149,,0
