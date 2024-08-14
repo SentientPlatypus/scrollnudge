@@ -95,7 +95,7 @@ body {
     cursor: pointer;
     border-radius: 4px; /* Rounded corners for button */
     height: 7vh;
-    width: 20vw;
+    width: 15vw;
 }
 
 .select-button.selected {

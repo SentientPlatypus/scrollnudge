@@ -88,6 +88,7 @@ def assessment():
 
     session['ip'] = request.environ['REMOTE_ADDR']
     session['run_numbers'] = list(range(1, 10))
+    session['round_counter'] = 0
     experiment_log = pd.read_csv('experiment_log.csv')
     print(experiment_log)
 
@@ -103,13 +104,16 @@ def submitAssessment():
     q3 = request.form.get('q3')
     q4 = request.form.get('q4')
 
-    if q1 == "75" and q2 == "yes" and q3 == "descending" and q4 == "30":
+    if q1 == "72" and q2 == "yes" and q3 == "descending" and q4 == "30":
         print("assessment passed. redirecting to experiment")
         return redirect(url_for('run_experiment'))
     return render_template('failed.html')
 
 @app.route('/run_experiment')
 def run_experiment():
+    session['round_counter'] +=1
+    roundcounter = session.get('round_counter')
+    
 
     user_id = session.get('user_id')
     email_id = session.get('email_id')
@@ -126,7 +130,7 @@ def run_experiment():
     run_number = session.get('run_number', 1)
 
     data = load_data(str(run_number) + ".csv")
-    return render_template('experiment.html', user_id=user_id, email_id = email_id, ip= ip, treatment=treatment, data=data, run_number = run_number)
+    return render_template('experiment.html', user_id=user_id, email_id = email_id, ip= ip, treatment=treatment, data=data, run_number = roundcounter)
 
 @app.route('/log_experiment_data', methods=['POST'])
 def log_experiment_data():
