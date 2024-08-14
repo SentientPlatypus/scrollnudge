@@ -206,7 +206,7 @@ def end_page():
         })
 
     
-    return render_template('endpage.html', message="You're done!", total_correct=total_correct, total_payout=total_payout)
+    return render_template('endpage.html', message="Thank you for participating in the experiment.", total_correct=total_correct, total_payout=total_payout)
 
 
 
