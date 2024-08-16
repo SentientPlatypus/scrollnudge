@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const penaltyPopup = document.getElementById('penalty-popup');
     const countdownElement = document.getElementById('countdown');
 
-    document.querySelector('.content').addEventListener('scroll', () => {
+    // Function to check which rectangles are visible
+    const checkVisibleRequests = () => {
         requests.forEach(request => {
             const rect = request.getBoundingClientRect();
             if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
@@ -23,6 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+    };
+
+    // Check visible rectangles on page load
+    checkVisibleRequests();
+
+    // Check visible rectangles when the user scrolls
+    document.querySelector('.content').addEventListener('scroll', () => {
+        checkVisibleRequests();
     });
 
     document.querySelectorAll('.select-button').forEach(button => {
