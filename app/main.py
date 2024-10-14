@@ -102,9 +102,8 @@ def submitAssessment():
     q1 = request.form.get('q1')
     q2 = request.form.get('q2')
     q3 = request.form.get('q3')
-    q4 = request.form.get('q4')
 
-    if q1 == "72" and q2 == "yes" and q3 == "descending" and q4 == "30":
+    if q1 == "72" and q2 == "yes" and q3 == "descending":
         print("assessment passed. redirecting to experiment")
         return redirect(url_for('run_experiment'))
     return render_template('failed.html')
