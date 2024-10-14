@@ -27,7 +27,7 @@ TREATMENT_MAP = {
 
 def calculateReward(ncorrect:int):
     """Calculates the amount of money we give them for the number of correct selection"""
-    return 2 + .2 * ncorrect if ncorrect > 0 else 0
+    return 12 + 0.2 * ncorrect
 
 
 def createApp():

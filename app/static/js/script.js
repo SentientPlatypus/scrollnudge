@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTime = performance.now(); // Record the start time
     const penaltyPopup = document.getElementById('penalty-popup');
     const countdownElement = document.getElementById('countdown');
+    const threshold = 72;
 
     // Function to check which rectangles are visible
     const checkVisibleRequests = () => {
@@ -55,13 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const selectionTime = (performance.now() - startTime) / 1000; // Time in seconds
             viewTimes[position].selectedAt = selectionTime;
-            viewTimes[position].correct = totalValue >= 75; // Log if the selection is correct
+            viewTimes[position].correct = totalValue >= threshold; // Log if the selection is correct
             console.log(`Position ${position} selected at ${selectionTime.toFixed(2)} seconds`);
 
             button.disabled = true;
             button.classList.add('selected');
 
-            if (totalValue >= 75) {
+            if (totalValue >= threshold) {
                 button.style.backgroundColor = '#a0998c'; // Correct
             } else {
                 button.style.backgroundColor = '#a0998c'; // Show penalty if incorrect
